@@ -1,0 +1,45 @@
+Artificial Intelligence (AI) is a field of computer science focused on creating systems that can perform tasks that normally require human intelligence. These tasks include learning, reasoning, problem solving, perception, and language understanding.
+
+Machine learning is a branch of artificial intelligence that allows computers to learn patterns from data instead of being explicitly programmed. Machine learning algorithms improve their performance as they are exposed to more data.
+
+Deep learning is a subset of machine learning that uses neural networks with many layers. These neural networks are designed to simulate the structure and function of the human brain.
+
+Neural networks are computing systems inspired by biological neural networks in the human brain. They consist of layers of interconnected nodes called neurons that process information.
+
+Natural Language Processing (NLP) is a field of artificial intelligence that focuses on enabling computers to understand, interpret, and generate human language.
+
+A Large Language Model (LLM) is a type of AI model trained on massive amounts of text data to understand and generate human-like language. Examples include GPT models and other transformer-based architectures.
+
+The Transformer architecture is a neural network architecture introduced in 2017. It uses a mechanism called attention to process sequences of data and has become the foundation for most modern language models.
+
+Python is one of the most widely used programming languages in artificial intelligence, machine learning, and data science because of its simplicity and extensive ecosystem of libraries.
+
+Data science is a multidisciplinary field that combines statistics, computer science, and domain knowledge to extract insights from data.
+
+The capital of Japan is Tokyo. Tokyo is one of the largest metropolitan areas in the world and serves as the political, economic, and cultural center of Japan.
+
+The capital of France is Paris. Paris is known for its history, culture, architecture, and landmarks such as the Eiffel Tower.
+
+The capital of India is New Delhi. New Delhi is the seat of all three branches of the Indian government.
+
+The capital of the United States is Washington, D.C. It serves as the political center of the country.
+
+Geopolitics is the study of how geography, economics, and political power influence international relations between countries.
+
+Climate change refers to long-term shifts in global temperatures and weather patterns, primarily caused by human activities such as burning fossil fuels.
+
+Renewable energy is energy generated from natural sources that are replenished constantly, such as solar energy, wind energy, and hydroelectric power.
+
+The Internet is a global network of interconnected computers that communicate with each other using standardized protocols.
+
+Cybersecurity is the practice of protecting computer systems, networks, and data from digital attacks, unauthorized access, or damage.
+
+Databases are systems designed to store, organize, and retrieve large amounts of information efficiently.
+
+Cloud computing is the delivery of computing services such as servers, storage, databases, networking, and software over the internet.
+
+Robotics is a field of engineering and computer science that focuses on designing and building robots capable of performing tasks automatically.
+
+Space exploration is the investigation of outer space using telescopes, satellites, spacecraft, and human space missions.
+
+The Solar System consists of the Sun and the objects that orbit it, including eight planets, moons, asteroids, and comets.

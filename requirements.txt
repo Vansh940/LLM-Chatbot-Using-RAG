@@ -1,0 +1,14 @@
+torch
+transformers
+datasets
+pandas
+pyarrow
+peft
+accelerate
+bitsandbytes
+tqdm
+streamlit
+peft
+sentence-transformers
+faiss-cpu
+pandas
