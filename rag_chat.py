@@ -76,7 +76,7 @@ for message in st.session_state.messages:
 # User input
 # -------------------------
 
-prompt = st.chat_input("Ask a question")
+prompt = st.text_input("Ask a question")
 
 if prompt:
 
