@@ -9,3 +9,4 @@ tqdm
 streamlit
 sentence-transformers
 faiss-cpu
+altair==4.2.2
