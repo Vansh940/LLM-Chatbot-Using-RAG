@@ -6,8 +6,6 @@ pyarrow
 peft
 accelerate
 tqdm
-streamlit==1.37.0
+streamlit
 sentence-transformers
 faiss-cpu
-altair==4.2.2
-standard-imghdr

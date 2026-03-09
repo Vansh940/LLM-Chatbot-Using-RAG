@@ -8,10 +8,11 @@ import numpy as np
 from threading import Thread
 
 st.set_page_config(page_title="RAG Chatbot", page_icon="🤖")
+
 st.title("🤖 RAG Powered Chatbot")
 
 # -------------------------
-# Load LLM
+# Load Model
 # -------------------------
 
 @st.cache_resource
@@ -28,11 +29,16 @@ def load_model():
     model = AutoModelForCausalLM.from_pretrained(
         base_model,
         device_map="auto",
+        torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
+        low_cpu_mem_usage=True
     )
 
     model = PeftModel.from_pretrained(model, adapter_path)
 
     model.eval()
+
+    for p in model.parameters():
+        p.requires_grad = False
 
     return tokenizer, model, device
 
@@ -40,7 +46,7 @@ def load_model():
 tokenizer, model, device = load_model()
 
 # -------------------------
-# Load embeddings
+# Load Embeddings
 # -------------------------
 
 @st.cache_resource
@@ -51,10 +57,10 @@ def load_embeddings():
     with open("knowledge/data.txt", "r", encoding="utf-8") as f:
         docs = f.read().split("\n\n")
 
-    embeddings = embedder.encode(docs)
+    embeddings = embedder.encode(docs, convert_to_numpy=True)
 
     index = faiss.IndexFlatL2(embeddings.shape[1])
-    index.add(np.array(embeddings))
+    index.add(embeddings)
 
     return embedder, docs, index
 
@@ -68,6 +74,10 @@ embedder, docs, index = load_embeddings()
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
+if len(st.session_state.messages) == 0:
+    st.info("💬 Ask a question to start the conversation")
+
+# Display history
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
@@ -76,7 +86,7 @@ for message in st.session_state.messages:
 # User input
 # -------------------------
 
-prompt = st.text_input("Ask a question")
+prompt = st.chat_input("Ask a question")
 
 if prompt:
 
@@ -89,18 +99,18 @@ if prompt:
     # RAG Retrieval
     # -------------------------
 
-    query_vector = embedder.encode([prompt])
+    query_vector = embedder.encode([prompt], convert_to_numpy=True)
 
-    D, I = index.search(np.array(query_vector), k=3)
+    D, I = index.search(query_vector, k=3)
 
     context = "\n".join([docs[i] for i in I[0]])
 
     # -------------------------
-    # Prompt with context
+    # Prompt
     # -------------------------
 
     input_prompt = f"""
-Use the following context to answer the question.
+Answer using ONLY the context.
 
 Context:
 {context}
@@ -114,7 +124,7 @@ Answer:
     inputs = tokenizer(input_prompt, return_tensors="pt").to(device)
 
     # -------------------------
-    # Streaming Setup
+    # Streaming
     # -------------------------
 
     streamer = TextIteratorStreamer(
@@ -126,8 +136,8 @@ Answer:
     generation_kwargs = dict(
         **inputs,
         streamer=streamer,
-        max_new_tokens=1000,
-        max_length=None,
+        max_new_tokens=300,
+        mx_length=None,
         do_sample=False,
         use_cache=True,
         pad_token_id=tokenizer.eos_token_id
@@ -137,22 +147,26 @@ Answer:
     thread.start()
 
     # -------------------------
-    # Display Response
+    # Assistant response
     # -------------------------
 
     with st.chat_message("assistant"):
 
         message_placeholder = st.empty()
 
-        # Thinking indicator
         message_placeholder.markdown("🤖 **Thinking...**")
 
         full_response = ""
 
         for new_text in streamer:
             full_response += new_text
-            message_placeholder.markdown(full_response)
+            message_placeholder.markdown(full_response + "▌")
+
+        # Final response with underline
+        final_response = full_response + "\n\n---"
+
+        message_placeholder.markdown(final_response)
 
     st.session_state.messages.append(
-        {"role": "assistant", "content": full_response}
+        {"role": "assistant", "content": final_response}
     )
