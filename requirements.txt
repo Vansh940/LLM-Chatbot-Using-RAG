@@ -12,3 +12,4 @@ peft
 sentence-transformers
 faiss-cpu
 pandas
+altair==4.2.2
