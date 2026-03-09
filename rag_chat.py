@@ -28,7 +28,6 @@ def load_model():
     model = AutoModelForCausalLM.from_pretrained(
         base_model,
         device_map="auto",
-        dtype=torch.float16
     )
 
     model = PeftModel.from_pretrained(model, adapter_path)
